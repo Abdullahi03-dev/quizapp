@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ABDULLTHON</title>
+    <meta charset="utf-8">
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- mobile metas -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="../css/animate.css">
+    
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../css/magnific-popup.css">
+
+    <link rel="stylesheet" href="../css/aos.css">
+
+    <link rel="stylesheet" href="../css/ionicons.min.css">
+
+    <link rel="stylesheet" href="../css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="../css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="../css/flaticon.css">
+    <link rel="stylesheet" href="../css/icomoon.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="../aos.css">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+  </head>
+  <body>
+    
+<div class="alertmessage">
+  
+      <h3 id="alertText"></h3>
+    </div>
+
+<section class="section">
+  <div class="form">
+    <h2 class="animate__animated animate__slideInLeft animate__delay-1s">LOGIN!</h2>
+    <!-- <input type="text" name="" placeholder="Name..." id="name"> -->
+<div>
+      <input type="email"  placeholder="Email..." id="email">
+      <img src="email-1572-svgrepo-com.svg" id="input_img" class="animate__animated animate__flipInX animate__delay-.7s">
+    </div>
+    <div>
+      <input type="password" placeholder="Password" id="password">
+      <img src="password-lock-svgrepo-com.svg" id="input_img" class="animate__animated animate__flipInX animate__delay-
+      .7s">
+    </div>
+    <button id="submit">Login</button>
+    <h6>Don't have an account?</h6><a href="signup.html">Signup</a>
+  </div>
+</section>
+
+   
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/jquery.timepicker.min.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/index.js"></script>
+    <script src="aos.js"></script>
+    <script type="module">
+  
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+      import { getDatabase , ref,set,get,push,child,onValue} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAe3aXDjUiXGdBfzxs45XmPDp__Z-XFiU4",
+    authDomain: "jsquizapp-9385d.firebaseapp.com",
+    databaseURL: "https://jsquizapp-9385d-default-rtdb.firebaseio.com",
+    projectId: "jsquizapp-9385d",
+    storageBucket: "jsquizapp-9385d.firebasestorage.app",
+    messagingSenderId: "692918879672",
+    appId: "1:692918879672:web:3382b4d9a23ff97e73fb4d",
+    measurementId: "G-511JNHNZK2"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const auth=getAuth(app)
+  // const analytics = getAnalytics(app);
+// let name=document.getElementById('name').value
+let alertmessage=document.querySelector('.alertmessage')
+let alertText=document.getElementById('alertText')
+ 
+ function alertMessage(text,danger){
+   if(danger){
+     alertText.innerHTML='<img src="images/497789.png" style="width:23px;height:23px;margin-right:6px">'+text
+     alertmessage.classList.add('alert_show')
+     alertmessage.classList.add('animate__animated', 'animate__slideInRight');
+     setTimeout(()=>{
+      alertmessage.classList.remove('alert_show')
+     alertmessage.classList.remove('animate__animated', 'animate__slideInRight');
+     },2000)
+   }else{
+     alertText.innerHTML='<img src="images/1827422.png" style="width:23px;height:23px;margin-right:6px">'+text
+     alertmessage.classList.add('alert_show')
+     alertmessage.classList.add('animate__animated', 'animate__slideInRight');
+     setTimeout(()=>{
+      alertmessage.classList.remove('alert_show')
+     alertmessage.classList.remove('animate__animated', 'animate__slideInRight');
+     },2000)
+   }
+     
+     
+ }
+let email=document.getElementById('email').value
+    let password=document.getElementById('password').value
+   let btn=document.getElementById('submit');
+   btn.addEventListener('click', e =>{
+    e.preventDefault();
+    let email=document.getElementById('email').value
+    let password=document.getElementById('password').value
+    if (!email || !password) {
+      
+      alertMessage('FILL IN THE INPUTS',true)
+
+}
+          btn.disabled=true;
+          btn.innerHTML='<div class="loader"></div>';
+          signInWithEmailAndPassword(auth,email,password)
+          .then((userCredential)=>{
+            //signed up
+            // localStorage.setItem('quizname',name)
+            const user=userCredential.user;
+            alertMessage('SUCCESSFULLY LOGGED IN',false)
+          setTimeout(()=>{
+              window.location='../home2.html'
+          },3000)
+          })
+          .catch((error)=>{
+            const errorCode=error.code;
+            const errorMessage=error.message;
+            alertMessage(errorMessage,true)
+          })
+   })
+   
+</script>
+  </body>
+</html>
