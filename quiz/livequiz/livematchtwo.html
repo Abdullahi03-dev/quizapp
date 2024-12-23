@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz App</title>
+    <!-- <link rel="stylesheet" href="../css/style.css"> -->
+
+    <link rel="stylesheet" type="text/css" href="livequiz.css">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+</head>
+<body>
+    <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+    <div class="final_modal">
+        <span>
+            <img src="../../images/house.svg" id="homebtn">
+        </span>
+        <h2 class="finalTag"></h2>
+        <h3 class="scoreTag" style="text-align: center;"></h3>
+        <h4 class="scoreTag2" style="text-align: center;color:#00ff7f "></h4>
+        <div class="buttons">
+            <a href="../../leaderboard.html">View Leaderboard</a>
+        </div>
+    </div>
+
+    <div class="rules_modal">
+        <span><h2 class="rule_tag">RULES</h2>
+            <img src="../../images/closebtn.png" id="remove_rule">
+        
+        </span>
+        <ul>
+            <li>DO NOT REFRESH THE PAGE WHEN PLAYING LIVE YOU WILL BE DISQUALIFIED!</li>
+            <li>DO NOT SHARE YOUR ROOM CODE WITH MORE THAN TWO PLAYERS</li>
+            <li>DO NOT WORRY ABOUT YOUR PREVIOUS CHOSEN ANSWERS,THEY ARE SAFE!</li>
+        </ul>
+    </div>
+
+    <section class="section">
+        <nav>
+            <h3 id="question_length" style="font-size: 2rem; color: #00ff7f; font-weight: 700;"></h3>
+            <h3 id="language">JAVASCRIPT</h3>
+            <span style="display: flex; align-items: center; justify-content: center;">
+                <img src="../../images/stop-watch-clock-hour-wait-watch-wall-clock-svgrepo-com.svg" style="margin: 0 2px; width: 40px; height: 40px;">
+                <h3 id="time" style="color: #00ff7f;">0:00</h3>
+            </span>
+        </nav>
+        <div class="container">
+            <!-- <div class="questiondiv"> -->
+                <h1 id="questionTag">WHAT IS HTML?lasl;;;;;; shhhhhhhhhhc hhhh hhhhhhhhhhhh</h1>
+            <!-- </div> -->
+            <div class="checkboxes">
+                <div><input type="radio" name="answer" id="input_1" value="a"><label for="input_1" id="label">A) hypertext</label></div>
+                <div><input type="radio" name="answer" id="input_2" value="b"><label for="input_2" id="label">B) hypertext markup</label></div>
+                <div><input type="radio" name="answer" id="input_3" value="c"><label for="input_3" id="label">C) hypertext markup language</label></div>
+                <div><input type="radio" name="answer" id="input_4" value="d"><label for="input_4" id="label">D) hypertext markup lang</label></div>
+            </div>
+        </div>
+        <div class="bottom_nav">
+            <span id="prevspan">
+                <img src="../../images/3114883.png" style="width: 23px; height: 23px; margin-right: 3px;">
+                <h3 id="prevbtn">Previous</h3>
+            </span>
+            <span id="nextspan">
+                <h3 id="nextbtn">NEXT</h3>
+                <img src="../../images/right-arrow-svgrepo-com.svg" style="width: 23px; height: 23px;">
+            </span>
+        </div>
+    </section>
+
+
+
+<!-- 
+<div id="loader_page">
+    <div id="loader">
+        
+    </div>
+</div> -->
+
+
+
+    <script type="module">
+        // alert('script')
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+    import { getDatabase, ref, onValue, update ,off} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+"use strict"
+    // Firebase Configuration
+    const firebaseConfig = {
+  apiKey: "AIzaSyC8P95wacIXEpsBFKY9pVjt4TClZdDMr_8",
+  authDomain: "jsquizapp-38287.firebaseapp.com",
+  projectId: "jsquizapp-38287",
+  storageBucket: "jsquizapp-38287.firebasestorage.app",
+  messagingSenderId: "801608217601",
+  appId: "1:801608217601:web:6a82cef52ddfbe6d64fc00",
+  measurementId: "G-XXDSX1VW3R"
+};
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+   
+
+let timeToUse=30/60;
+let questionToUse=0
+let quizName=localStorage.getItem('quizname')
+let roomCode=localStorage.getItem('roomCode')
+
+ function fetchSettings() {
+  const dbref = ref(db, 'room');
+    onValue(dbref, (snapshot) => {
+        if (snapshot.exists()) {
+            snapshot.forEach((childSnapshot) => {
+                if (childSnapshot.child('room_code').val() == roomCode) {
+                    console.log('User found in database');
+                    const data = childSnapshot.val();
+
+                    if (!localStorage.getItem('liveCurrentQuestion')) {
+                      timeToUse = data.time * 60;
+                    }else{
+                        timeToUse=30;
+                    }
+                    
+                    if (!localStorage.getItem('liveCurrentQuestion')) {
+                        questionToUse = data.questions;
+                        questionNumber = questionToUse; 
+                        localStorage.setItem('liveQuestionNumber', questionNumber); // Save questionNumber
+                        localStorage.setItem('liveCurrentQuestion', 0);
+                    } else {
+                        questionNumber = parseInt(localStorage.getItem('liveQuestionNumber'));
+                    }
+                    timerSeconds=timeToUse;
+                    currentQuestionIndex = parseInt(localStorage.getItem('liveCurrentQuestion'));
+                    startTimer();
+                    fetchQuestions();
+                }
+            });
+        } else {
+            console.log('No user found');
+        }
+    }, {
+    onlyOnce: true
+  });
+}
+   
+function updateScore(quizName, score) {
+  const dbRef = ref(db, 'Users');
+  onValue(dbRef, (snapshot) => {
+    if (snapshot.exists()) {
+      snapshot.forEach((childSnapshot) => {
+        if (childSnapshot.child('name').val() == quizName) {
+          const currentScore = childSnapshot.child('livescore').val() || 0;
+          update(childSnapshot.ref, {
+            livescore: currentScore + score
+          });
+        }
+      });
+    }
+  }, {
+    onlyOnce: true
+  });
+}
+
+
+function updateRoomScore(roomCode, score) {
+  const dbRef = ref(db, 'room');
+  onValue(dbRef, (snapshot) => {
+    if (snapshot.exists()) {
+      snapshot.forEach((childSnapshot) => {
+        if (childSnapshot.child('room_code').val() == roomCode) {
+          update(childSnapshot.ref, {
+            UserTwoScore:score
+          });
+        }
+      });
+    }
+  }, {
+    onlyOnce: true
+  });
+}
+function updateUserSate(roomCode) {
+  const dbRef = ref(db, 'room');
+  onValue(dbRef, (snapshot) => {
+    if (snapshot.exists()) {
+      snapshot.forEach((childSnapshot) => {
+        if (childSnapshot.child('room_code').val() == roomCode) {
+          update(childSnapshot.ref, {
+            userTwoFinish:true
+          });
+        }
+      });
+    }
+  }, {
+    onlyOnce: true
+  });
+}
+
+
+        
+
+    // DOM Elements
+    const questionTag = document.getElementById('questionTag');
+    const checkboxes = document.querySelectorAll('input[name="answer"]');
+    const labels = document.querySelectorAll('#label');
+    const questionLength = document.getElementById('question_length');
+    const finalModal = document.querySelector('.final_modal');
+    const scoreTag = document.querySelector('.scoreTag');
+    const finalTag = document.querySelector('.finalTag');
+    const loader_page=document.querySelector('.js-preloader')
+    let bottom_nav=document.querySelector('.bottom_nav')
+    let prevspan=document.querySelector('#prevspan')
+
+
+    // State Variables
+    let jsonData = [];
+    let answer
+    let timer
+    let currentQuestionIndex = localStorage.getItem('liveCurrentQuestion') ? parseInt(localStorage.getItem('liveCurrentQuestion')) : 0;
+    let score = localStorage.getItem('quizScore') ? parseInt(localStorage.getItem('quizScore')) : 0;
+      let  timerSeconds = localStorage.getItem('liveCurrentQuestion')?timeToUse*60:30
+    let questionNumber;
+
+    // Timer Functions
+    function startTimer() {
+        timer = setInterval(() => {
+            if (timerSeconds <= 0) {
+                endQuiz('TIME UP!!');
+                clearInterval(timer);
+            } else {
+                timerSeconds--;
+                const minutes = Math.floor(timerSeconds / 60);
+                const remainingSeconds = timerSeconds % 60;
+                document.getElementById('time').textContent = `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+            }
+        }, 1000);
+    }
+    function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        // Generate a random index between 0 and i
+        const j = Math.floor(Math.random() * (i + 1));
+        // Swap elements at indices i and j
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+    async function fetchQuestions() {
+        try {
+            const response = await fetch('https://abdullahi03-dev.github.io/Jschallenge-/live.json');
+            jsonData = await response.json();
+            // alert(response)
+            if (response.ok) {
+                loader_page.classList.add('remove_loader')
+            }
+           if (localStorage.getItem('liveCurrentQuestion')===0) {
+            shuffleArray(jsonData)
+    }else{
+        jsonData=jsonData
+    }
+            displayQuestion();
+        } catch (error) {
+            console.error('Error fetching questions:', error);
+            alert(error)
+        }
+    }
+
+    // Fetch Questions
+    
+
+    // Display Question
+    function displayQuestion() {
+        let started=localStorage.setItem('quizStarted',true)
+    if (currentQuestionIndex >= questionNumber) {
+        clearInterval(timer)
+        endQuiz('Quiz Completed!');
+        clearInterval(timer);
+    }
+    
+
+    const currentData = jsonData[currentQuestionIndex];
+    answer = currentData.correctAnswer[0];
+    questionTag.innerHTML = currentData.question;
+    labels.forEach((label, index) => label.textContent = currentData.options[index]);
+    checkboxes.forEach((checkbox, index) => {
+        checkbox.value = currentData.options[index];
+        checkbox.checked = false; // Clear previous selections
+    });
+    questionLength.textContent = `Q.${currentQuestionIndex + 1}`;
+    // Restore user's previous selection
+    const userAnswers = localStorage.getItem('liveUserAnswers')
+        ? JSON.parse(localStorage.getItem('liveUserAnswers'))
+        : {};
+    const questionKey = `question_${currentQuestionIndex + 1}`;
+    if (userAnswers[questionKey] !== undefined) {
+        const previousAnswer = userAnswers[questionKey];
+        checkboxes.forEach((checkbox) => {
+            if ((checkbox.value === answer) === previousAnswer) {
+                checkbox.checked = false;
+            }
+        });
+    }
+
+    selected(); // Attach event listeners to checkboxes
+}
+
+    // Handle Next Question
+    function nextQuestion() {
+           bottom_nav.classList.add('show_space');
+            prevspan.style.display='flex';
+        if (currentQuestionIndex <questionNumber) {
+            currentQuestionIndex++;
+         localStorage.setItem('liveCurrentQuestion', currentQuestionIndex); // Save question index
+            displayQuestion();
+        } else {
+            
+            endQuiz('Congratulations!');
+            clearInterval(timer)
+        }
+        selected();
+    }
+
+    // Handle Previous Question
+    function previousQuestion() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            localStorage.setItem('liveCurrentQuestion', currentQuestionIndex); // Save question index
+            displayQuestion();
+        }
+    }
+let count;
+function selected() {
+    checkboxes.forEach((answerEl) => {
+        answerEl.addEventListener('change', function (e) {
+            const selectedValue = e.target.value.trim();
+
+            // Fetch or initialize userAnswers from localStorage
+            let userAnswers = localStorage.getItem('liveUserAnswers')
+                ? JSON.parse(localStorage.getItem('liveUserAnswers'))
+                : {};
+
+            const questionKey = `question_${currentQuestionIndex + 1}`; // Unique key for each question
+
+            // Check if the current question already has a recorded answer
+            if (userAnswers[questionKey] === undefined) {
+                // First-time answer
+                if (selectedValue === answer) {
+                    score++; // Correct answer
+                } else {
+                    score = Math.max(score - 1, 0); // Incorrect answer, cap score at 0
+                }
+            } else {
+                // User is changing their answer
+                const previousAnswerCorrect = userAnswers[questionKey];
+
+                if (previousAnswerCorrect && selectedValue !== answer) {
+                    // Previously correct, now wrong
+                    score = Math.max(score - 1, 0);
+                } else if (!previousAnswerCorrect && selectedValue === answer) {
+                    // Previously wrong, now correct
+                    score++;
+                }
+            }
+            // Update userAnswers for the current question
+            userAnswers[questionKey] = selectedValue === answer;
+            localStorage.setItem('liveUserAnswers', JSON.stringify(userAnswers));
+            localStorage.setItem('quizScore', score);
+        });
+    });
+}
+
+    // End Quiz
+    function endQuiz(message) {
+    finalTag.textContent = message;
+    let gottenScore = localStorage.getItem('liveUserAnswers');
+    let obj = JSON.parse(gottenScore);
+
+    let count = 0;
+    let showCountHere=0;
+    for (const key in obj) {
+        if (obj[key] === true) {
+            count++;
+            // count++
+        }
+    }
+updateUserSate(roomCode)
+updateScore(quizName, count);
+updateRoomScore(roomCode,count)
+    const dbref=ref(db,'room')
+  onValue(dbref,snapshot=>{
+            if (snapshot.exists()) {
+              snapshot.forEach(childSnapshot=>{
+                if (childSnapshot.child('room_code').val()==roomCode ){
+                  const data=childSnapshot.val()
+                  const Useronescore=childSnapshot.val().hostScore;
+                  if (data.userOneFinish==true) {
+                    scoreTag.textContent = `YOU SCORED ${count} OUT OF ${questionNumber || 'ERROR'} `;
+                    document.querySelector('.scoreTag2').textContent=`YOUR OPPONENT SCORED ${Useronescore}`
+                  }else{
+                    scoreTag.textContent = `YOU SCORED ${count} OUT OF ${questionNumber || 'ERROR'}`;
+                    document.querySelector('.scoreTag2').textContent=`YOUR OPPONENT IS STILL PLAYING`
+                  }
+                }
+              })
+            }
+          })    
+    finalModal.classList.add('modal_show');
+    localStorage.removeItem('liveUserAnswers');
+    localStorage.removeItem('roomCode');
+    localStorage.removeItem('liveCurrentQuestion');
+    localStorage.removeItem('quizStarted');
+    localStorage.removeItem('liveQuestionNumber');
+    localStorage.setItem('finished',true)
+}
+    
+
+    document.getElementById('nextbtn').addEventListener('click', nextQuestion);
+    document.getElementById('prevbtn').addEventListener('click', previousQuestion);
+    document.getElementById('remove_rule').addEventListener('click',()=>{
+        let rules_modal=document.querySelector('.rules_modal')
+        rules_modal.classList.add('remove_rules');
+    })
+    document.getElementById('homebtn').addEventListener('click',()=>{
+        window.location='../../live.html'
+    })
+
+    // On Load
+    window.onload = () => {
+        localStorage.removeItem('finished')
+        if (currentQuestionIndex!==0){
+            bottom_nav.classList.add('show_space');
+        prevspan.style.display='flex'
+}
+    if (!localStorage.getItem('liveCurrentQuestion')) {
+        // Start fresh
+        fetchSettings();
+    } else {
+        // Restore state from localStorage
+        // timerSeconds = 30;
+        currentQuestionIndex = parseInt(localStorage.getItem('liveCurrentQuestion'));
+        questionNumber = parseInt(localStorage.getItem('liveQuestionNumber')); 
+        // Restore questionNumber
+        startTimer(); // Start timer with the stored time
+        fetchQuestions(); // Fetch questions and display the current question
+    }
+};
+
+
+    
+
+
+</script>
+</body>
+</html>
