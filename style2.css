@@ -1,0 +1,9 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+.banners{
+	height: 95vh;
+	background-image: url('images/download-122.png');
+	background-size: contain;
+}

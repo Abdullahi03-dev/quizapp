@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+</head>
+<body>
+<style>
+	body{
+		background: black;
+	}
+	.final_modal h3,h4{
+		padding: 0;
+		margin: 0;
+	}
+
+		.final_modal{
+	
+	width: 350px;
+	height: 200px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 3rem 3rem;
+	padding-top: 1em;
+	background-color: rgba(255,255,255,0.09);
+	border-radius: 16px;
+	box-shadow: 20px 20px 40px -6px rgba(0,0,0,0.4);
+	backdrop-filter: blur(25px);
+	-webkit-backdrop-filter:blur(25px);
+	border:1px solid rgba(255,255,255,0.2);
+	-webkit-transition:all 0.2s ease-in-out;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	transition: .5s;
+	z-index: 1111;
+	/*display: none;*/
+}
+.final_modal h2{
+	color:  #00ff7f;
+	padding-bottom: 7px;
+	text-align: center;
+}
+.final_modal .buttons{
+	padding-top: 13px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.final_modal a{
+	text-decoration: none;
+	cursor: pointer;
+	border:none;
+	display: inline-block;
+	text-align: center;
+	margin: 14px 7px;
+	color: black;
+	background-color:  #00ff7f;
+	padding: 9px 30px;
+	font-weight: 700;
+	border-radius: 20px;
+}
+.final_modal img{
+	width: 100%;
+	align-self: flex-end;
+	width: 25px;
+	height: 25px;
+	padding: 10px;
+}
+.modal_show{
+	/*transition: .5s;*/
+	display: grid;
+	animation: slidein .5s ease-in-out;	
+}
+@keyframes slidein{
+	from{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	opacity: 0;
+	margin-top: -50px;
+	}
+	to{
+	margin-top: 50px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	opacity: 1;
+	}
+}
+@media(max-width: 770px){
+.modal{
+	width: 340px;
+}
+.final_modal{
+    width: 230px;
+}
+}
+</style>
+
+
+
+	<div class="final_modal">
+        <img src="images/house.svg">
+        <h2 class="finalTag">QUIZ UP!</h2>
+        <h3 class="scoreTag" style="text-align: center;">YOU SCORED 5</h3>
+        <h4 class="scoreTag2" style="text-align: center;color:#00ff7f ">YOUR OPPONENT SCORED 10</h4>
+        <div class="buttons">
+            <a href="../../leaderboard.html">View Leaderboard</a>
+        </div>
+    </div>
+
+</body>
+</html>

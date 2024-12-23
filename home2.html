@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ABDULLTHON</title>
+    <meta charset="utf-8">
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- mobile metas -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/aos.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style3.css">
+    <link rel="stylesheet" type="text/css" href="aos.css">
+     <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+  </head>
+  <body>
+    <style>
+        body{
+            width:100%;
+        }
+      .banner-text{
+        padding: 3em 0;
+      }
+      @media(max-width: 770px){
+        .banner-text{
+          padding-top: 14em;
+          padding-bottom: 0;
+        }
+         .banner-text h1{
+            font-size:40px;
+        }
+      }
+     .cta{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 0;
+}
+  .cta a:nth-child(1){
+  width:110px;
+  padding: 6px 6px;
+  background: #00ff7f !important;
+  font-weight: 700;
+  color: white;
+  margin: 6px;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+  color: black;
+  font-weight: 700;
+}
+.cta a:nth-child(2){
+  width:130px;
+  border:2px solid #00ff7f;
+  color: white !important;
+  margin: 0 7px;
+  padding: 6px 6px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+  color: black;
+  font-weight: 800;
+}
+.hero-wrap{
+  height: 600px;
+}
+  .hero-wrap .overlay {
+    height: 600px;
+}
+
+
+    </style>
+    <div class="alertmessage">
+      <h3 id="alertText"></h3>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">ABDULL<span><></span><span style="font-weight: 900;font-size: 1.5em; font-family: cursive;">T</span>HON</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="registration/login.php" class="nav-link">Logout</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <div class="hero-wrap" style="background-image: url('images/download-121.png');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text justify-content-start align-items-center justify-content-center">
+          <div class="col-lg-8 ">
+            <div class="banner-text">
+              <h1 class="mb-4 text-center" style="color: #00ff7f" id="typedtext"></h1>
+              <p style="font-size: 18px;" class="text-center animate__animated animate__slideInLeft animate__delay-2s">Participate in a variety of Javascript topics and compete against others in real-time and have some challenges at your own pace</p>
+              <!-- <div class="cta">
+                <a href="">PLAY NOW</a>
+              <a href="">LEARN More</a>
+              </div> -->
+              
+              <a href="" class="icon-wrap popup-vimeo d-flex align-items-center mt-4 justify-content-center">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="create_modal">
+  <div class="modal">
+      <img src="images/closebtn.png" style="width: 35px;height: 35px;" id="closebtn">
+      
+      <div class="layer_1">
+    <div>
+    <label style="font-size:15px">TIME:</label>
+  </div>
+    <div class="dropDown">
+    <h3 id="time_show">CHOOSE TIME
+    <img src="images/2722987.png" alt="" style="20px;height:20px;"></img>
+    </h3>
+    <div class="dropDown1">
+      <a href="" id="links">2 Min</a>
+      <a href="" id="links">5 Min</a>
+      <a href="" id="links">7 Min</a>
+    </div>
+  </div>
+  </div>
+  
+  <div class="layer_1">
+  
+  <div>
+    <label style="font-size:15px">QUESTIONS:</label>
+  </div>
+
+
+    <div class="dropDown">
+    <h3 id="ques_show">QUESTIONS LIST<img src="images/2722987.png" style="20px;height:20px;"></img></h3>
+    <div class="dropDown1" id="dropDown2">
+      <a href="" id="links_2">5 Quest</a>
+      <a href="" id="links_2">15 Quest</a>
+      <a href="" id="links_2">20 Quest</a>
+    </div>
+  </div>
+  
+  
+  </div>
+  
+  
+  
+  
+
+  <div>
+    <button id="start_quiz" style="display: flex;align-items: center;justify-content: center;">START QUIZ</button>
+    
+  </div> 
+  </div>
+</div>
+
+
+    <section class="card-sec">
+      <h1>Choose Your Quiz Adventure</h1>
+      <p>Select from our live quizzes or play at your own pace with regular quizzes</p>
+      <div class="cards">
+        
+
+
+
+        <div class="card" data-aos="fade-down">
+          <h2>LIVE JAVASCRIPT QUIZ</h2>
+          <img src="images/3407054.png" style="width:60px;height:60px;display: block;margin: 9px auto;">
+          <p>Compete with other Javascript enthusiats in real-time! Our live quizzes will test yor skills and knowledge of javascript concepts,from basics to advanced topics</p>
+          <a href="live.html">Join Live Quiz</a>
+        </div>
+
+
+        <div class="card" data-aos="fade-up">
+          <h2>TAKE QUIZ ONLY</h2>
+          <img src="images/5677990.png" style="width:60px;height:60px;display: block;margin:9px auto;">
+          <p>Take our Javascript quiz at your own pace and assess your knowledge of Javascript and best practices.And top the world wide leaderboard of Javscript dynasty!</p>
+          <button id="create_modal">Take Quiz</button>
+        </div>
+        
+        
+         <div class="card" data-aos="fade-up">
+          <h2>LEADERBOARD</h2>
+          <img src="images/5677990.png" style="width:60px;height:60px;display: block;margin:9px auto;">
+          <p>Curious to see how you rank among other fellow developers of Javascript enthusiasts? Click to view the leaderboard and discover where you stand. You might be surprised at how close you are to the top spot!</p>
+          <a href="leaderboard.html">Check Out</a>
+        </div>
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </section>
+
+
+
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+   <script src="js/aos.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/index2.js"></script>
+  <script src="aos.js"></script>
+
+  <script src="js/errorcheck.js"></script>
+  <script type="module">
+    "use strict"
+      checkUser('quizname','register/signup.html')
+
+    let alertmessage=document.querySelector('.alertmessage')
+let alertText=document.getElementById('alertText')
+ 
+  function alertMessage(text,danger){
+   if(danger){
+     alertText.innerHTML='<img src="images/497789.png" style="width:23px;height:23px;margin-right:6px">'+text
+     alertmessage.classList.add('alert_show')
+     alertmessage.classList.add('animate__animated', 'animate__slideInRight');
+     setTimeout(()=>{
+      alertmessage.classList.remove('alert_show')
+     alertmessage.classList.remove('animate__animated', 'animate__slideInRight');
+     },2000)
+   }else{
+     alertText.innerHTML='<img src="images/1827422.png" style="width:23px;height:23px;margin-right:6px">'+text
+     alertmessage.classList.add('alert_show')
+     alertmessage.classList.add('animate__animated', 'animate__slideInRight');
+     setTimeout(()=>{
+      alertmessage.classList.remove('alert_show')
+     alertmessage.classList.remove('animate__animated', 'animate__slideInRight');
+     },2000)
+   }
+     
+     
+ }
+    
+    
+    
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+      import { getDatabase, ref, query, orderByChild, equalTo, get, update,onValue } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+    // Initialize Firebase
+    const firebaseConfig = {
+  apiKey: "AIzaSyC8P95wacIXEpsBFKY9pVjt4TClZdDMr_8",
+  authDomain: "jsquizapp-38287.firebaseapp.com",
+  projectId: "jsquizapp-38287",
+  storageBucket: "jsquizapp-38287.firebasestorage.app",
+  messagingSenderId: "801608217601",
+  appId: "1:801608217601:web:6a82cef52ddfbe6d64fc00",
+  measurementId: "G-XXDSX1VW3R"
+};
+  // Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const dbref=ref(db,'Users')
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+ 
+
+ 
+    let dropDown1=document.querySelector('.dropDown1')
+    let dropDown2=document.querySelector('#dropDown2')
+    let time_show=document.querySelector('#time_show')
+   let time_show2=document.querySelector('#ques_show')
+  let storedTime='' 
+  let storedQuestions=''
+    let links=document.querySelectorAll('#links')
+let links2=document.querySelectorAll('#links_2')
+
+    time_show.addEventListener('click',(e)=>{
+      dropDown2.classList.remove('drop_show')
+      dropDown1.classList.toggle('drop_show')
+      
+    })
+
+let click1=false
+    links.forEach((link)=>{
+      link.addEventListener('click',(e)=>{
+        e.preventDefault()
+      time_show.innerHTML=link.innerHTML+'<img src="images/2722987.png" style="20px;height:20px;"></img>'
+      click1=true
+      storedTime=link.innerHTML
+      dropDown1.classList.remove('drop_show')
+      })
+    })
+    
+    
+    
+    
+    
+    
+    time_show2.addEventListener('click',(e)=>{
+      dropDown1.classList.remove('drop_show')
+      dropDown2.classList.toggle('drop_show')
+    })
+
+let click2=false
+    links2.forEach((link2)=>{
+      link2.addEventListener('click',(f)=>{
+        f.preventDefault()
+      time_show2.innerHTML=link2.innerHTML+'<img src="images/2722987.png" style="20px;height:20px;"></img>'
+      click2=true
+      storedQuestions=link2.innerHTML;
+       dropDown2.classList.remove('drop_show')
+      })
+    })
+    
+    
+    let startQuiz=document.getElementById('start_quiz')
+    startQuiz.addEventListener('click',()=>{
+      // alert('ddd')
+      if(!click1||!click2){
+        // alert('no tfpfp')
+        alertMessage('SELECT ALL SETTINGS',true)
+        }
+        else{
+        startQuiz.disabled=true;
+    startQuiz.innerHTML='<div class="loader"></div>';
+      
+       let quizname=localStorage.getItem('quizname')
+       storedTime.slice(0,-5)
+       storedTime=parseInt(storedTime)
+       storedQuestions=parseInt(storedQuestions)
+       let settings={
+           storedtime:storedTime,
+           storedquestions:storedQuestions
+       }
+       onValue(dbref,(snapshot)=>{
+			// alert('hi')
+			console.log(JSON.stringify(snapshot))
+			if (snapshot.exists()) {
+				snapshot.forEach((childSnapshot)=>{
+					if (childSnapshot.child('name').val()==quizname) {
+        alertMessage('SUCCESSFULLY ADDED SETTINGS',false)
+						update(childSnapshot.ref,{
+							time:settings.storedtime,
+							questionsList:settings.storedquestions
+						})
+            setTimeout(()=>{
+             window.location='quiz/quiz.html'
+           },100)
+					}else{
+						console.log('no user found')
+					}
+
+				})
+			}
+		})
+       
+      }
+       
+    })
+    
+    
+    
+  </script>
+  <script>
+      let createModalBtn=document.getElementById('create_modal');
+      let modal=document.querySelector('.modal');
+
+createModalBtn.addEventListener('click',()=>{
+          // modal2.classList.remove('modal2_show')
+          window.scrollTo({top:0,behaviour:'smooth'})
+          modal.classList.add('modal_show')
+          const timecode=new Date().getTime();
+          const room_code=parseInt(timecode.toString().slice(-7));
+         
+      })    
+
+
+
+
+    let closebtns=document.querySelectorAll('#closebtn');
+      closebtns.forEach((eachbtn)=>{
+        eachbtn.addEventListener('click',()=>{
+          modal.classList.remove('modal_show')
+          // modal2.classList.remove('modal2_show')
+
+        })
+      })
+       
+  </script>    
+  </body>
+</html>

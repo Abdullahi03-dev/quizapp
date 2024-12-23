@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ABDULLTHON</title>
+    <meta charset="utf-8">
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- mobile metas -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="css/aos.css">
+
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style4.css">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+    <link rel="stylesheet" type="text/css" href="aos.css">
+  </head>
+  <body>
+      <div class="alertmessage">
+      <h3 id="alertText"></h3>
+    </div>
+    
+<div class="create_modal">
+  <div class="modal">
+      <img src="images/closebtn.png" style="width: 35px;height: 35px;" id="closebtn">
+      <div class="room_code">
+      <h3 style="color:  #00ff7f;font-size: 14px;font-weight: 700;" id="romecodecontainer"></h3>
+    </div>
+
+
+
+      <div class="layer_1">
+    <div>
+    <label style="font-size:15px">TIME:</label>
+  </div>
+    <div class="dropDown">
+    <h3 id="time_show">CHOOSE TIME
+    <img src="images/2722987.png" alt="" style="20px;height:20px;"></img>
+    </h3>
+    <div class="dropDown1">
+      <a href="" id="links">2 Min</a>
+      <a href="" id="links">5 Min</a>
+      <a href="" id="links">7 Min</a>
+    </div>
+  </div>
+  </div>
+  
+  
+
+  <div class="layer_1">
+  <div>
+    <label style="font-size:15px">QUESTIONS:</label>
+  </div>
+    <div class="dropDown">
+    <h3 id="ques_show">QUESTIONS LIST<img src="images/2722987.png" style="20px;height:20px;"></img></h3>
+    <div class="dropDown1" id="dropDown2">
+      <a href="" id="links_2">5 Quest</a>
+      <a href="" id="links_2">15 Quest</a>
+      <a href="" id="links_2">20 Quest</a>
+    </div>
+  </div>
+  </div>
+
+
+  <div>
+    <button id="create_room" style="display: flex;align-items: center;justify-content: center;">CREATE ROOM</button>
+    
+  </div> 
+  </div>
+
+</div>
+
+<div class=" modal2 search_modal">
+  <div style="align-self: flex-end;padding-bottom: 10px;">
+      <img src="images/closebtn.png" style="width: 30px;height: 30px;" id="closebtn">
+    </div>
+  <input type="text" name="" placeholder="Search for room code" id="search_room_input">
+  <div>
+    <button id="search_room_btn">Search</button>
+  </div>
+</div>
+
+    <section class="card-sec">
+      <h1>Quiz Lobby</h1>
+      <p>Find a quiz or create your own</p>
+      <div class="cards">
+        
+
+
+
+        <div class="card" data-aos="fade-up">
+          <h2>Create A Room</h2>
+          <p>Create a quiz room and get a unique code.Share this code with friends to join your quiz.Get ready to compete and have fun!</p>
+          <button id="create_modal">Create Room</button>
+
+        </div>
+
+
+        <div class="card" data-aos="fade-down">
+          <h2>Search For Room</h2>
+          <p>Join a quiz room by entering the unique code shared by the host.Find the room and get ready to play.Compete with others and win!</p>
+          <button id="search_modal">Search Room</button>
+        </div>
+
+
+
+
+
+
+      </div>
+    </section>
+
+
+   
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/errorcheck.js"></script>
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script> -->
+  <!-- <script src="js/google-map.js"></script> -->
+  <script src="js/main.js"></script>
+    <script src="aos.js"></script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+      import { getDatabase, ref, query, orderByChild, equalTo, get, update,onValue ,push} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+    // Initialize Firebase
+    const firebaseConfig = {
+  apiKey: "AIzaSyC8P95wacIXEpsBFKY9pVjt4TClZdDMr_8",
+  authDomain: "jsquizapp-38287.firebaseapp.com",
+  projectId: "jsquizapp-38287",
+  storageBucket: "jsquizapp-38287.firebasestorage.app",
+  messagingSenderId: "801608217601",
+  appId: "1:801608217601:web:6a82cef52ddfbe6d64fc00",
+  measurementId: "G-XXDSX1VW3R"
+};
+  // Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+      checkUser('quizname','register/signup.html')
+         let alertmessage=document.querySelector('.alertmessage')
+let alertText=document.getElementById('alertText')
+ 
+  function alertMessage(text,danger){
+   if(danger){
+     alertText.innerHTML='<img src="images/497789.png" style="width:23px;height:23px;margin-right:6px">'+text
+     alertmessage.classList.add('alert_show')
+     alertmessage.classList.add('animate__animated', 'animate__slideInRight');
+     setTimeout(()=>{
+      alertmessage.classList.remove('alert_show')
+     alertmessage.classList.remove('animate__animated', 'animate__slideInRight');
+     },2000)
+   }else{
+     alertText.innerHTML='<img src="images/1827422.png" style="width:23px;height:23px;margin-right:6px">'+text
+     alertmessage.classList.add('alert_show')
+     alertmessage.classList.add('animate__animated', 'animate__slideInRight');
+     setTimeout(()=>{
+      alertmessage.classList.remove('alert_show')
+     alertmessage.classList.remove('animate__animated', 'animate__slideInRight');
+     },2000)
+   }
+     
+     
+ }
+      let createModalBtn=document.getElementById('create_modal');
+      let modal=document.querySelector('.modal');
+      let search_modal=document.getElementById('search_modal');
+      let modal2=document.querySelector('.modal2');
+      
+
+
+      createModalBtn.addEventListener('click',()=>{
+      
+          modal2.classList.remove('modal2_show')
+          window.scrollTo({top:0,behaviour:'smooth'})
+          modal.classList.add('modal_show')
+          const timecode=new Date().getTime();
+          const room_code=parseInt(timecode.toString().slice(-7));
+          localStorage.setItem('room_code',room_code)
+         document.getElementById('romecodecontainer').innerHTML='ROOM CODE:'+'  '+ room_code+'<img src="images/5993921.png" style="width: 25px; height: 25px;margin: 0 3px;" id="copyclipboard">';
+      })
+
+      search_modal.addEventListener('click',()=>{
+        modal.classList.remove('modal_show')
+        window.scrollTo({top:0,behaviour:'smooth'})
+          modal2.classList.add('modal2_show')
+      })
+
+      let closebtns=document.querySelectorAll('#closebtn');
+      closebtns.forEach((eachbtn)=>{
+        eachbtn.addEventListener('click',()=>{
+          modal.classList.remove('modal_show')
+          modal2.classList.remove('modal2_show')
+
+        })
+      })
+
+      let copyclipboard=document.querySelector('.room_code')
+      
+      copyclipboard.addEventListener('click',()=>{
+   const textToCopy=localStorage.getItem('room_code')
+   navigator.clipboard.writeText(textToCopy)
+    .then(() => {
+      alertMessage('SUCCESSFULLY COPIED TO CLIPBOARD',false)
+    })
+    .catch((error) => {
+      alertMessage('ERROR COPYING TO CLIPBOARD '+error,true)
+    });
+      })
+
+
+
+
+
+
+
+
+      let dropDown1=document.querySelector('.dropDown1')
+    let dropDown2=document.querySelector('#dropDown2')
+    let time_show=document.querySelector('#time_show')
+   let time_show2=document.querySelector('#ques_show')
+  let storedTime='' 
+  let storedQuestions=''
+    let links=document.querySelectorAll('#links')
+let links2=document.querySelectorAll('#links_2')
+
+    time_show.addEventListener('click',(e)=>{
+      dropDown2.classList.remove('drop_show')
+      dropDown1.classList.toggle('drop_show')
+
+      
+    })
+
+let click1=false
+    links.forEach((link)=>{
+      link.addEventListener('click',(e)=>{
+        e.preventDefault()
+      time_show.innerHTML=link.innerHTML+'<img src="images/2722987.png" style="20px;height:20px;"></img>'
+      click1=true
+      storedTime=link.innerHTML
+      dropDown1.classList.remove('drop_show')
+      })
+    })
+    
+    
+    
+    
+    
+    
+    time_show2.addEventListener('click',(e)=>{
+      dropDown1.classList.remove('drop_show')
+      dropDown2.classList.toggle('drop_show')
+
+    })
+
+let click2=false
+    links2.forEach((link2)=>{
+      link2.addEventListener('click',(f)=>{
+        f.preventDefault()
+      time_show2.innerHTML=link2.innerHTML+'<img src="images/2722987.png" style="20px;height:20px;"></img>'
+      click2=true
+      storedQuestions=link2.innerHTML;
+       dropDown2.classList.remove('drop_show')
+      })
+    })
+
+      
+
+ let btn=document.getElementById('create_room');
+        
+   
+btn.addEventListener('click', e =>{
+    e.preventDefault()
+
+     if(!click1||!click2){
+        // alert('no tfpfp')
+        alertMessage('SELECT ALL SETTINGS',true)
+        }
+        else{
+
+    btn.disabled=true;
+    btn.innerHTML='<div class="loader"></div>';
+setTimeout(()=>{
+  storedTime.slice(0,-5)
+       storedTime=parseInt(storedTime)
+       storedQuestions=parseInt(storedQuestions)
+       let settings={
+           storedtime:storedTime,
+           storedquestions:storedQuestions,
+       }
+    
+   const dbref = ref(db, 'room');
+ const room_code=localStorage.getItem('room_code')
+        push(dbref,{
+          room_code:parseInt(room_code),
+          time: settings.storedtime,
+          questions: settings.storedquestions,
+          host:localStorage.getItem('quizname'),
+          hostScore:0,
+          UserTwoScore:0,
+          userOneFinish:false,
+          userTwoFinish:false,
+          userJoined:false
+        }).then(() => {
+          // name = '';
+        })
+        btn.innerHTML='Successfully Created'
+        alertMessage('WAITING FOR USER TO JOIN',false)
+        // setTimeout(()=>{
+          onValue(dbref,snapshot=>{
+            if (snapshot.exists()) {
+              snapshot.forEach(childSnapshot=>{
+                if (childSnapshot.child('room_code').val()==localStorage.getItem('room_code')) {
+                  const data=childSnapshot.val()
+                  let getuserJoined=data.userJoined;
+                  if (data.userJoined==true) {
+                    window.location='quiz/livequiz/livematchone.html'
+                  }
+                }
+              })
+            }
+          })
+            
+        // },2000)
+      },3000)
+   }
+
+  })
+
+      let search_btn=document.getElementById('search_room_btn')
+      
+      let search_input=document.getElementById('search_room_input')
+      search_btn.addEventListener('click',()=>{
+      const dbref = ref(db, 'room');
+          if(search_input.value===''){
+          alertMessage('FILL IN THE INPUT',true)
+      }else{
+        
+          onValue(dbref,(snapshot)=>{
+			if (snapshot.exists()) {
+				snapshot.forEach((childSnapshot)=>{
+					if (childSnapshot.child('room_code').val()==search_input.value) {
+						
+						update(childSnapshot.ref,{
+							userJoined:true,
+						})
+            localStorage.setItem('roomCode',search_input.value)
+            // localStorage.setItem('quizname2',quizname)
+            search_btn.disabled=true;
+    search_btn.innerHTML='<div class="loader"></div>';
+						alertMessage('ROOM CODE FOUND!!',false)
+						setTimeout(()=>{
+            window.location='quiz/livequiz/livematchtwo.html'
+        },2000)
+					}else{
+						alertMessage('ROOM CODE NOT FOUND!',true)
+					}
+
+				})
+			}
+		})
+      }
+      
+      
+	})
+     
+      
+  </script>
+
+  </body>
+</html>
