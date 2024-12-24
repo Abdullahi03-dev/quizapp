@@ -42,7 +42,7 @@
         </nav>
         <div class="container">
             <!-- <div class="questiondiv"> -->
-                <h1 id="questionTag">WHAT IS HTML?lasl;;;;;; shhhhhhhhhhc hhhh hhhhhhhhhhhh</h1>
+                <h2 id="questionTag"></h2>
             <!-- </div> -->
             <div class="checkboxes">
                 <div><input type="radio" name="answer" id="input_1" value="a"><label for="input_1" id="label">A) hypertext</label></div>
@@ -210,7 +210,7 @@ function updateScore(quizName,score){
             if (response.ok) {
                 loader_page.classList.add('remove_loader')
             }
-           if (!localStorage.getItem('currentQuestion')) {
+           if (localStorage.getItem('currentQuestion')) {
             shuffleArray(jsonData)
     }else{
         jsonData=jsonData
