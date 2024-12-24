@@ -236,7 +236,7 @@ function updateScore(quizName,score){
 
     const currentData = jsonData[currentQuestionIndex];
     answer = currentData.correctAnswer[0];
-    questionTag.innerHTML = currentData.question;
+    questionTag.textContent = currentData.question;
     labels.forEach((label, index) => label.textContent = currentData.options[index]);
     checkboxes.forEach((checkbox, index) => {
         checkbox.value = currentData.options[index];
