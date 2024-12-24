@@ -271,7 +271,7 @@ function populateLeaderboard() {
         row.innerHTML = `
           <td></td>
           <td>${data.name}</td>
-          <td>${data.score*data.livescore*10}</td>
+          <td>${data.score+data.livescore*10}</td>
         `;
         row.cells[0].appendChild(image);
       } else {
@@ -297,7 +297,7 @@ let loader_page=document.querySelector('.js-preloader');
 // Call function to populate leaderboard table
 populateLeaderboard();
 document.getElementById('homebtn').addEventListener('click',()=>{
-        window.location='live.html'
+        window.location='home2.html'
     })
     </script>
 </body>

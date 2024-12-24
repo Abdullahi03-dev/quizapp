@@ -23,11 +23,11 @@
   </div>
   <!-- ***** Preloader End ***** -->
     <div class="final_modal">
-        <img src="../../images/house.svg">
+        <img src="../images/house.svg">
         <h2 class="finalTag"></h2>
         <h3 class="scoreTag" style="text-align: center;"></h3>
         <div class="buttons">
-            <button>View Leaderboard</button>
+            <a href="../Leaderboard.html">View Leaderboard</a>
             <button id="play_again">Play Again</button>
         </div>
     </div>
@@ -210,7 +210,7 @@ function updateScore(quizName,score){
             if (response.ok) {
                 loader_page.classList.add('remove_loader')
             }
-           if (localStorage.getItem('currentQuestion')===0) {
+           if (!localStorage.getItem('currentQuestion')) {
             shuffleArray(jsonData)
     }else{
         jsonData=jsonData

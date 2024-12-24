@@ -256,7 +256,7 @@ function updateUserSate(roomCode) {
             if (response.ok) {
                 loader_page.classList.add('remove_loader')
             }
-           if (localStorage.getItem('liveCurrentQuestion')===0) {
+           if (!localStorage.getItem('liveCurrentQuestion')) {
             shuffleArray(jsonData)
     }else{
         jsonData=jsonData

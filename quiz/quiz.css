@@ -50,9 +50,7 @@ label{
 	font-weight: 700;
 	color: white;
 }
-#questionTag{
 
-}
 #language{
 	font-size: 1.5rem;
 }
@@ -74,7 +72,7 @@ label{
 }
 .
 .container h1{
-	font-size: 2.4rem;
+	font-size: 2.2rem;
 	font-weight: 700;
 	color: white;
 	text-align: center;
@@ -235,6 +233,19 @@ label{
 	justify-content: center;
 }
 .final_modal button{
+	cursor: pointer;
+	border:none;
+	display: inline-block;
+	text-align: center;
+	margin: 14px 7px;
+	color: black;
+	background-color:  #00ff7f;
+	padding: 9px 30px;
+	font-weight: 700;
+	border-radius: 20px;
+}
+.final_modal a{
+	text-decoration: none;
 	cursor: pointer;
 	border:none;
 	display: inline-block;
