@@ -114,7 +114,7 @@ let alertText=document.getElementById('alertText')
  
  function alertMessage(text,danger){
    if(danger){
-     alertText.innerHTML='<img src="images/497789.png" style="width:23px;height:23px;margin-right:6px">'+text
+     alertText.innerHTML='<img src="../images/497789.png" style="width:23px;height:23px;margin-right:6px">'+text
      alertmessage.classList.add('alert_show')
      alertmessage.classList.add('animate__animated', 'animate__slideInRight');
      setTimeout(()=>{
@@ -122,7 +122,7 @@ let alertText=document.getElementById('alertText')
      alertmessage.classList.remove('animate__animated', 'animate__slideInRight');
      },2000)
    }else{
-     alertText.innerHTML='<img src="images/1827422.png" style="width:23px;height:23px;margin-right:6px">'+text
+     alertText.innerHTML='<img src="../images/1827422.png" style="width:23px;height:23px;margin-right:6px">'+text
      alertmessage.classList.add('alert_show')
      alertmessage.classList.add('animate__animated', 'animate__slideInRight');
      setTimeout(()=>{
@@ -143,28 +143,34 @@ let alertText=document.getElementById('alertText')
       alertMessage('FILL IN THE INPUTS',true)
       return
 }
-try{
-  const dbref=ref(db,'Users');
-const snapshot= await get(dbref);
-if (snapshot.exists()) {
-  const users=snapshot.val();
-  const isNameTaken=Object.values(users).some((user) => user.name === name);
-  if (isNameTaken) {
-    localStorage.setItem('quizname',name)
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    alertMessage("LOGIN successful!", false);
-    setTimeout(()=>{
-      window.location='../home2.html'
-    },2000)
-      }else{
-          btn.disabled=false;
-          btn.innerHTML='Login';
-        alertMessage('ACCOUNT NOT FOUND',true)
-      }
+try {
+  const dbref = ref(db, 'Users');
+  const snapshot = await get(dbref);
+  
+  if (snapshot.exists()) {
+    const users = snapshot.val();
+    const isNameTaken = Object.values(users).some((user) => user.name === name);
+    
+    if (isNameTaken) {
+      localStorage.setItem('quizname', name);
+      
+      // Authenticate the user
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      alertMessage("LOGIN successful!", false);
+      
+      setTimeout(() => {
+        window.location = '../home2.html';
+      }, 2000);
+    } else {
+      alertMessage('ACCOUNT NOT FOUND', true);
     }
-}catch(err){
-  alertMessage(err)
+  } else {
+    alertMessage('No users found in the database.', true);
+  }
+} catch (err) {
+  console.error('Error:', err);
+  alertMessage(`Error: ${err.message}`, true);
 }
          
    })
