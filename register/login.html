@@ -48,7 +48,11 @@
 <section class="section">
   <div class="form">
     <h2 class="animate__animated animate__slideInLeft animate__delay-1s">LOGIN!</h2>
-    <!-- <input type="text" name="" placeholder="Name..." id="name"> -->
+    <div >
+          <input type="text" 
+           placeholder="Name..." id="name">
+          <img src="user-svgrepo-com.svg" id="input_img" class="animate__animated animate__flipInX animate__delay-.7s">
+    </div>
 <div>
       <input type="email"  placeholder="Email..." id="email">
       <img src="email-1572-svgrepo-com.svg" id="input_img" class="animate__animated animate__flipInX animate__delay-.7s">
@@ -85,7 +89,7 @@
     <script type="module">
   
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getAuth,signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
       import { getDatabase , ref,set,get,push,child,onValue} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 
   const firebaseConfig = {
@@ -129,35 +133,40 @@ let alertText=document.getElementById('alertText')
      
      
  }
-let email=document.getElementById('email').value
-    let password=document.getElementById('password').value
    let btn=document.getElementById('submit');
-   btn.addEventListener('click', e =>{
+   btn.addEventListener('click',async(e) =>{
     e.preventDefault();
+    let name=document.getElementById('name').value
     let email=document.getElementById('email').value
     let password=document.getElementById('password').value
-    if (!email || !password) {
-      
+    if (!name||!email || !password) {
       alertMessage('FILL IN THE INPUTS',true)
-
+      return
 }
-          btn.disabled=true;
-          btn.innerHTML='<div class="loader"></div>';
-          signInWithEmailAndPassword(auth,email,password)
-          .then((userCredential)=>{
-            //signed up
-            // localStorage.setItem('quizname',name)
-            const user=userCredential.user;
-            alertMessage('SUCCESSFULLY LOGGED IN',false)
-          setTimeout(()=>{
-              window.location='../home2.html'
-          },3000)
-          })
-          .catch((error)=>{
-            const errorCode=error.code;
-            const errorMessage=error.message;
-            alertMessage(errorMessage,true)
-          })
+try{
+  const dbref=ref(db,'Users');
+const snapshot= await get(dbref);
+if (snapshot.exists()) {
+  const users=snapshot.val();
+  const isNameTaken=Object.values(users).some((user) => user.name === name);
+  if (isNameTaken) {
+    localStorage.setItem('quizname',name)
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    alertMessage("LOGIN successful!", false);
+    setTimeout(()=>{
+      window.location='../home2.html'
+    },2000)
+      }else{
+          btn.disabled=false;
+          btn.innerHTML='Login';
+        alertMessage('ACCOUNT NOT FOUND',true)
+      }
+    }
+}catch(err){
+  alertMessage(err)
+}
+         
    })
    
 </script>
