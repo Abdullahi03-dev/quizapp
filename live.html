@@ -338,40 +338,59 @@ setTimeout(()=>{
   })
 
       let search_btn=document.getElementById('search_room_btn')
-      
       let search_input=document.getElementById('search_room_input')
-      search_btn.addEventListener('click',()=>{
+      search_btn.addEventListener('click',async(e)=>{
+
+        try{
       const dbref = ref(db, 'room');
           if(search_input.value===''){
           alertMessage('FILL IN THE INPUT',true)
       }else{
-        
+        const snapshot1=await get(dbref);
+      if (snapshot1.exists()) {
+        snapshot1.forEach((childSnapshot1)=>{
+        const snapdata=childSnapshot1.val();
+        if (snapdata.room_code==search_input.value) {
+          if (snapdata.userJoined==true) {
+            alert
+            alertMessage('ROOM IS ALREADY FILLED UP',true)
+          }else{
           onValue(dbref,(snapshot)=>{
-			if (snapshot.exists()) {
-				snapshot.forEach((childSnapshot)=>{
-					if (childSnapshot.child('room_code').val()==search_input.value) {
-						
-						update(childSnapshot.ref,{
-							userJoined:true,
-						})
+      if (snapshot.exists()) {
+        snapshot.forEach((childSnapshot)=>{
+          if (childSnapshot.child('room_code').val()==search_input.value) {
+            
+            update(childSnapshot.ref,{
+              userJoined:true,
+            })
             localStorage.setItem('roomCode',search_input.value)
             // localStorage.setItem('quizname2',quizname)
             search_btn.disabled=true;
     search_btn.innerHTML='<div class="loader"></div>';
-						alertMessage('ROOM CODE FOUND!!',false)
-						setTimeout(()=>{
+            alertMessage('ROOM CODE FOUND!!',false)
+            setTimeout(()=>{
             window.location='quiz/livequiz/livematchtwo.html'
         },2000)
-					}else{
-						alertMessage('ROOM CODE NOT FOUND!',true)
-					}
+          }else{
+            alertMessage('ROOM CODE NOT FOUND!',true)
+          }
 
-				})
-			}
-		})
+        })
       }
-      
-      
+    })
+        }
+        }
+
+
+
+
+
+
+   })
+      }}
+            }catch(err){
+              alert(err)
+            }
 	})
      
       
