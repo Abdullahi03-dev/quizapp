@@ -218,8 +218,8 @@
                 <tr>
                     <th>Rank</th>
                     <th>User</th>
-                    <th>Score</th>
-                    <th>1V1 SCORE</th>
+                    <th>Total Pts</th>
+                    <th>1V1 pts</th>
                 </tr>
             </thead>
             <tbody id="leaderboard-body">
@@ -283,7 +283,7 @@ function populateLeaderboard() {
         row.innerHTML = `
           <td>${index + 1}</td>
           <td>${data.name}</td>
-          <td>${data.score+data.livescore*100}</td>
+          <td>${data.score*100}</td>
           <td>${data.livescore*100}</td>
         `;
       }
