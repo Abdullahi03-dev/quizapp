@@ -148,7 +148,7 @@ try {
   
   if (snapshot.exists()) {
     const users = snapshot.val();
-    const isNameTaken = Object.values(users).some((user) => user.name === name);
+    const isNameTaken = Object.values(users).some((user) => user.name !=== name);
     
     if (isNameTaken) {
       localStorage.setItem('quizname', name);
