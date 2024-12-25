@@ -135,54 +135,57 @@ let alertText=document.getElementById('alertText')
 
 
    let btn=document.getElementById('submit');
-   btn.addEventListener('click', e =>{
-    e.preventDefault()
-    
-      
-let email=document.getElementById('email').value
+   btn.addEventListener('click',async(e) =>{
+    e.preventDefault()      
+    let name=document.getElementById('name').value
+    let email=document.getElementById('email').value
     let password=document.getElementById('password').value
          if (!email || !password) {
     
     alertMessage('Please fill in all fields!',true);
     return;
-
 } 
-  btn.disabled=true;
+    btn.disabled=true;
     btn.innerHTML='<div class="loader"></div>';
-    createUserWithEmailAndPassword(auth,email,password)
-          .then((userCredential)=>{
-            const user=userCredential.user;
-            //
-          })
-          .catch((error)=>{
-            const errorCode=error.code;
-            const errorMessage=error.message;
-            // alertMessage(errorMessage)
-          })
- 
- 
-     const dbref = ref(db, 'Users');
-          
-        // Send the message to the Realtime Database
-        let name=document.getElementById('name').value
-       push(dbref,{
+    try{
+      const dbref=ref(db,'Users');
+      const snapshot=await get(dbref);
+      if (snapshot.exists()) {
+        const users=snapshot.val();
+        const isNameTaken=Object.values(users).some((user) => user.name === name);
+        if (isNameTaken) {
+          alertMessage('USERNAME ALREADY EXIST',true);
+           btn.disabled=false;
+          btn.innerHTML='SIGNUP';
+          return;
+        }
+
+    localStorage.setItem('quizname',name)
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    btn.disabled=true;
+    btn.innerHTML='<div class="loader"></div>';
+
+    // Add the user to the database
+    const usersRef = ref(db, "Users");
+    await push(usersRef, {
           name:name,
           score: 0,
           livescore:0,
           time:0,
           questionsList:0,
-          
-        }).then(() => {
-         localStorage.setItem('quizname',name)
-          alertMessage('SIGNING IN',false);
-          setTimeout(()=>{
-              window.location='../home2.html'
-          },3000)
-           
-        }).catch((err)=>{
-            // alertMessage(err,true);
-        })
-      
+    });
+
+    alertMessage("Signup successful!", false);
+    setTimeout(()=>{
+      window.location='../home2.html'
+    },2000)
+
+
+      }
+    }catch(err){
+      alertMessage(err,true)
+    }
 
    })
 </script>
