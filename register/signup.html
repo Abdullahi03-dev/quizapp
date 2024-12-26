@@ -138,6 +138,7 @@ let alertText=document.getElementById('alertText')
    btn.addEventListener('click',async(e) =>{
     e.preventDefault()      
     let name=document.getElementById('name').value
+     name=name.trim()
     let email=document.getElementById('email').value
     let password=document.getElementById('password').value
          if (!email || !password) {
